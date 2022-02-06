@@ -13,10 +13,6 @@ import static com.jstechnologies.flashhttpserver.http.Constants.LF;
 
 public class HttpParser {
 
-    private boolean strict=true;
-    public HttpParser(){
-
-    }
 
     public HttpRequest parse(InputStream inputStream) throws Exception{
 
@@ -38,7 +34,6 @@ public class HttpParser {
 
     private void parseBody(BufferedReader reader,HttpRequest request) throws IOException {
         int _byte;
-
         while((_byte=reader.read())>-1){
             request.addToBody((byte)_byte);
         }
@@ -46,7 +41,7 @@ public class HttpParser {
     }
 
     private void parseHeaders(BufferedReader reader,HttpRequest request)  throws IOException {
-        String line=null;
+        String line;
         while((line=reader.readLine())!=null){
 
             if(line.isEmpty())
@@ -82,18 +77,6 @@ public class HttpParser {
         }
 
     }
-
-    boolean isCRLF(int currentByte,InputStreamReader reader) throws IOException {
-        int nextByte=reader.read();
-        if(currentByte==CR && nextByte==LF){
-            return true;
-        }
-        else if(currentByte==CR){
-            throw new IOException("Malformed request");
-        }
-        return false;
-    }
-
 
     void print(Object obj){
         System.out.println(obj);

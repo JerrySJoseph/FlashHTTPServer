@@ -132,7 +132,6 @@ class HttpParserTest {
                 "Host: localhost:8080\n" +
                 "Content-Type: application/json\n" +
                 "Cache-Control: no-cache\n" +
-                "Postman-Token: 00e32bf5-edf9-d221-6d7f-c9edd2e1ca24\n" +
                 "\n" +
                 "{\n" +
                 "\t\"name\":\"jerin\"\n" +
@@ -148,7 +147,6 @@ class HttpParserTest {
                 "Host: localhost:8080\n" +
                 "Content-Type: application/json\n" +
                 "Cache-Control: no-cache\n" +
-                "Postman-Token: 3f63ff4d-d889-8b00-f531-cb6b7e48665a\n" +
                 "\n" +
                 "{\n" +
                 "\t\"name\":\"jerin\"\n" +
