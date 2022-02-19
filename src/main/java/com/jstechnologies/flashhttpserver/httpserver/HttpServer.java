@@ -1,11 +1,14 @@
 package com.jstechnologies.flashhttpserver.httpserver;
 
+import com.jstechnologies.flashhttpserver.annotations.Method;
 import com.jstechnologies.flashhttpserver.base.ConnectionHandler;
 import com.jstechnologies.flashhttpserver.base.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * HTTP Server
@@ -14,16 +17,16 @@ import java.net.Socket;
  * */
 public class HttpServer extends Server {
 
-    int HTTP_PORT=8080;
-    HttpRequestHandler handler;
-    public HttpServer(int port,HttpRequestHandler handler) throws IOException {
+    Class<?> srcClass;
+
+    public HttpServer(int port,Class<?> srcClass) throws IOException {
         super(port);
-        this.handler=handler;
+        this.srcClass=srcClass;
     }
 
-    public HttpServer(HttpRequestHandler handler) throws IOException {
+    public HttpServer(Class<?> srcClass) throws IOException {
         super(0);
-        this.handler=handler;
+        this.srcClass=srcClass;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class HttpServer extends Server {
 
     @Override
     public void onNewConnection(Socket socket) {
-        HttpConnectionHandler httpConnectionHandler= new HttpConnectionHandler(socket,this.handler);
+        HttpConnectionHandler httpConnectionHandler= new HttpConnectionHandler(socket,this.srcClass);
         httpConnectionHandler.start();
     }
 }

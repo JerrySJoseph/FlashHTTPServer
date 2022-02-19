@@ -8,13 +8,31 @@ import java.util.Map;
 public class HttpRequest extends HttpMessage{
     private String method;
     private String target;
+    private String queryString;
     private String version;
     private Map<String,String> headers;
     private List<Byte> body;
+    private String RequestLine;
 
     HttpRequest(){
         this.headers=new HashMap<>();
         this.body= new ArrayList<>();
+    }
+
+    public String getRequestLine() {
+        return RequestLine;
+    }
+
+    public void setRequestLine(String requestLine) {
+        RequestLine = requestLine;
+    }
+
+    public String getQueryString() {
+        return queryString;
+    }
+
+    public void setQueryString(String queryString) {
+        this.queryString = queryString;
     }
 
     public String getMethod() {

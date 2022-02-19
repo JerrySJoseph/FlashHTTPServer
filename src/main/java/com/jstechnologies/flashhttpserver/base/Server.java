@@ -55,7 +55,6 @@ public abstract class Server extends Thread {
                 Socket requestSocket = null;
                 requestSocket=mServerSocket.accept();
                 onNewConnection(requestSocket);
-                System.out.println("After Connection request");
             }
         } catch (Exception e) {
             e.printStackTrace();
