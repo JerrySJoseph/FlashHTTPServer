@@ -27,7 +27,6 @@ public abstract class ConnectionHandler extends Thread {
      * Manually dispose the socket object*/
     protected void disposeSocket(){
         try {
-            System.out.println("Closing the socket");
             this.mSocket.close();
         } catch (Exception e) {}
 

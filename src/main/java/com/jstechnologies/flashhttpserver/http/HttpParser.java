@@ -5,18 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Map;
-
-import static com.jstechnologies.flashhttpserver.http.Constants.CR;
-import static com.jstechnologies.flashhttpserver.http.Constants.LF;
 
 public class HttpParser {
 
-    private boolean strict=true;
-    public HttpParser(){
-
-    }
 
     public HttpRequest parse(InputStream inputStream) throws Exception{
 
@@ -38,7 +29,6 @@ public class HttpParser {
 
     private void parseBody(BufferedReader reader,HttpRequest request) throws IOException {
         int _byte;
-
         while((_byte=reader.read())>-1){
             request.addToBody((byte)_byte);
         }
@@ -46,7 +36,7 @@ public class HttpParser {
     }
 
     private void parseHeaders(BufferedReader reader,HttpRequest request)  throws IOException {
-        String line=null;
+        String line;
         while((line=reader.readLine())!=null){
 
             if(line.isEmpty())
@@ -72,8 +62,11 @@ public class HttpParser {
                 if(parsed.length!=3)
                     throw new Exception("Invalid Request Line");
                 request.setMethod(parsed[0]);
-                request.setTarget(parsed[1]);
+                var target=parsed[1].split("\\?");
+                request.setTarget(target[0]);
+                request.setQueryString(target.length>1?target[1]:"");
                 request.setVersion(parsed[2]);
+                request.setRequestLine(line);
                 return;
             }catch (Exception e){
                 throw new IOException("BAD request");
@@ -82,18 +75,6 @@ public class HttpParser {
         }
 
     }
-
-    boolean isCRLF(int currentByte,InputStreamReader reader) throws IOException {
-        int nextByte=reader.read();
-        if(currentByte==CR && nextByte==LF){
-            return true;
-        }
-        else if(currentByte==CR){
-            throw new IOException("Malformed request");
-        }
-        return false;
-    }
-
 
     void print(Object obj){
         System.out.println(obj);

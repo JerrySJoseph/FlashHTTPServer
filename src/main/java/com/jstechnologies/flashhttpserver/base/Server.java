@@ -1,9 +1,7 @@
 package com.jstechnologies.flashhttpserver.base;
 
-import com.jstechnologies.flashhttpserver.httpconfig.HttpConfiguration;
 
 import java.io.IOException;
-import java.net.CookieHandler;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -24,7 +22,7 @@ public abstract class Server extends Thread {
     public Server() throws IOException {
     }
 
-    public abstract void onNewConnection(Socket socket);
+    protected abstract void onNewConnection(Socket socket);
 
     @Override
     public void interrupt() {
@@ -57,7 +55,6 @@ public abstract class Server extends Thread {
                 Socket requestSocket = null;
                 requestSocket=mServerSocket.accept();
                 onNewConnection(requestSocket);
-                System.out.println("After Connection request");
             }
         } catch (Exception e) {
             e.printStackTrace();
